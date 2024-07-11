@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/Header";
 import Search from "./components/Search";
 import { useState } from "react";
+import ImageCard from "./components/ImageCard";
 
 const UNSPLASH_KEY = process.env.REACT_APP_UNSPLASH_ACCESS_KEY;
 const API_URL = process.env.REACT_APP_API_URL;
@@ -18,7 +19,7 @@ const App = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setImages([data, ...images]);
+        setImages([{ ...data, title: word }, ...images]);
         console.log(images);
       })
       .catch((err) => {
@@ -31,6 +32,9 @@ const App = () => {
     <div className="App">
       <Header title="Image Gallery" />
       <Search word={word} setWord={setWord} handleSubmit={handleSubmitSearch} />
+      {images.map((image, i) => (
+        <ImageCard key={i} image={image} />
+      ))}
     </div>
   );
 };
