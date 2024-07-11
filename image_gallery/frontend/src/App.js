@@ -8,6 +8,8 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 const App = () => {
   const [word, setWord] = useState("");
+  const [images, setImages] = useState([]);
+  console.log(images);
 
   const handleSubmitSearch = (e) => {
     e.preventDefault();
@@ -16,6 +18,8 @@ const App = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        setImages([data, ...images]);
+        console.log(images);
       })
       .catch((err) => {
         console.log(err);
