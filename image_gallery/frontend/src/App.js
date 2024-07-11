@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import Search from "./components/Search";
 import { useState } from "react";
 import ImageCard from "./components/ImageCard";
+import { Container, Col, Row } from "react-bootstrap";
 
 const UNSPLASH_KEY = process.env.REACT_APP_UNSPLASH_ACCESS_KEY;
 const API_URL = process.env.REACT_APP_API_URL;
@@ -27,14 +28,27 @@ const App = () => {
       });
     setWord("");
   };
+  const handleDeleteImage = (id) => {
+    setImages(images.filter((image) => image.id !== id));
+  };
 
   return (
     <div className="App">
       <Header title="Image Gallery" />
       <Search word={word} setWord={setWord} handleSubmit={handleSubmitSearch} />
-      {images.map((image, i) => (
-        <ImageCard key={i} image={image} />
-      ))}
+      <Container className="mt-4">
+        <Row xs={1} md={2} lg={3}>
+          {images.map((image, i) => (
+            <Col className="pb-3" key={i}>
+              <ImageCard
+                deleteImage={handleDeleteImage}
+                key={i}
+                image={image}
+              />
+            </Col>
+          ))}
+        </Row>
+      </Container>
     </div>
   );
 };
