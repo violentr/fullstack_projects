@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/Header";
 import Search from "./components/Search";
+import Welcome from "./components/Welcome";
 import { useState } from "react";
 import ImageCard from "./components/ImageCard";
 import { Container, Col, Row } from "react-bootstrap";
@@ -37,17 +38,21 @@ const App = () => {
       <Header title="Image Gallery" />
       <Search word={word} setWord={setWord} handleSubmit={handleSubmitSearch} />
       <Container className="mt-4">
-        <Row xs={1} md={2} lg={3}>
-          {images.map((image, i) => (
-            <Col className="pb-3" key={i}>
-              <ImageCard
-                deleteImage={handleDeleteImage}
-                key={i}
-                image={image}
-              />
-            </Col>
-          ))}
-        </Row>
+        {images.length ? (
+          <Row xs={1} md={2} lg={3}>
+            {images.map((image, i) => (
+              <Col className="pb-3" key={i}>
+                <ImageCard
+                  deleteImage={handleDeleteImage}
+                  key={i}
+                  image={image}
+                />
+              </Col>
+            ))}
+          </Row>
+        ) : (
+          <Welcome />
+        )}
       </Container>
     </div>
   );
