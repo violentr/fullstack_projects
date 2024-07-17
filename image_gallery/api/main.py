@@ -1,9 +1,11 @@
 from flask import Flask, request # type: ignore
 import os
 import requests # type: ignore
+from dotenv import load_dotenv # type: ignore
 
-API_URL="https://api.unsplash.com"
+load_dotenv(dotenv_path="./.env.local")
 CLIENT_ID = os.getenv('UNSPLASH_ACCESS_KEY')
+API_URL = os.getenv('API_URL')
 
 app = Flask(__name__)
 
@@ -15,7 +17,7 @@ def new_image():
 
   r = requests.get(url=url, headers=headers, params={"query": word})
   data = r.json()
-  return {"word": data}
+  return data
 
 
 
