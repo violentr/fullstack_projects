@@ -6,8 +6,7 @@ import { useState } from "react";
 import ImageCard from "./components/ImageCard";
 import { Container, Col, Row } from "react-bootstrap";
 
-const UNSPLASH_KEY = process.env.REACT_APP_UNSPLASH_ACCESS_KEY;
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5050";
 
 const App = () => {
   const [word, setWord] = useState("");
@@ -17,7 +16,7 @@ const App = () => {
   const handleSubmitSearch = (e) => {
     e.preventDefault();
     console.log(word);
-    fetch(`${API_URL}/photos/random?query=${word}&client_id=${UNSPLASH_KEY}`)
+    fetch(`${API_URL}/new-image?query=${word}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
