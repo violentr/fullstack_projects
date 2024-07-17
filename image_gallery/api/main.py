@@ -4,8 +4,12 @@ import requests # type: ignore
 from dotenv import load_dotenv # type: ignore
 
 load_dotenv(dotenv_path="./.env.local")
+# Env vars
 CLIENT_ID = os.getenv('UNSPLASH_ACCESS_KEY')
 API_URL = os.getenv('API_URL')
+
+if None in [CLIENT_ID, API_URL]:
+  raise EnvironmentError("Please create .env.local file and provide all necessary env variables")
 
 app = Flask(__name__)
 
