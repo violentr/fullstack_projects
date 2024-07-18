@@ -8,5 +8,10 @@
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit"
     },
-    "emmet.triggerExpansionOnTab": true
+    "emmet.triggerExpansionOnTab": true,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true
+  }
+    
 }
