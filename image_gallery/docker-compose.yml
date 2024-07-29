@@ -6,6 +6,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongodb_data:/data/db
   mongo-express:
     image: mongo-express
     restart: always
@@ -34,4 +36,6 @@ services:
       - '5050:5050'
     volumes:
       - ./api:/app
+volumes:
+  mongodb_data:
     
