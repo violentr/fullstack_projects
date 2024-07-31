@@ -25,7 +25,6 @@ CORS(app)
 app.config["DEBUG"] = DEBUG
 
 
-
 @app.route("/new-image")
 def new_image():
     """Get image from API"""
@@ -37,16 +36,22 @@ def new_image():
     data = r.json()
     return data
 
+
 @app.route("/images", methods=["GET", "POST"])
 def images():
+    """Read images from db and Save image to db"""
     if request.method == "GET":
-        #read images from db
+        # read images from db
         images = images_collection.find({})
         return jsonify([img for img in images])
+
     if request.method == "POST":
-        #save image in the db
-        
-    
+        # save image in the db
+        image = request.get_json()
+        image["_id"] = image.get("id")
+        result = images_collection.insert_one(image)
+        return {"inserted_id": result.inserted_id}
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5050)
