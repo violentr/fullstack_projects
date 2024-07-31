@@ -1,4 +1,3 @@
-from crypt import methods
 import os
 from flask import Flask, request, jsonify  # type: ignore
 import requests  # type: ignore
