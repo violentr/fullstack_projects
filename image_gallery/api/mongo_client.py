@@ -15,11 +15,3 @@ mongo_client = MongoClient(
     password=MONGO_PASSWORD,
     port=MONGO_PORT,
 )
-
-
-def insert_test_document():
-    """Create test document"""
-    db = mongo_client.test
-    test_collection = db.test_collection
-    res = test_collection.insert_one({"name": "TestUser"})
-    print(res)
