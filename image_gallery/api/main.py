@@ -1,8 +1,9 @@
-from flask import Flask, request  # type: ignore
 import os
+from flask import Flask, request  # type: ignore
 import requests  # type: ignore
 from dotenv import load_dotenv  # type: ignore
 from flask_cors import CORS  # type: ignore
+from mongo_client import insert_test_document
 
 load_dotenv(dotenv_path="./.env.local")
 # Env vars
@@ -19,9 +20,12 @@ app = Flask(__name__)
 CORS(app)
 app.config["DEBUG"] = DEBUG
 
+insert_test_document()
+
 
 @app.route("/new-image")
 def new_image():
+    """Get image from API"""
     word = request.args.get("query")
     headers = {"Authorization": f"Client-ID {CLIENT_ID}"}
     url = f"{API_URL}/photos/random"
