@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios";
 import Header from "./components/Header";
 import Search from "./components/Search";
 import Welcome from "./components/Welcome";
@@ -13,19 +14,16 @@ const App = () => {
   const [images, setImages] = useState([]);
   console.log(images);
 
-  const handleSubmitSearch = (e) => {
+  const handleSubmitSearch = async (e) => {
     e.preventDefault();
     console.log(word);
-    fetch(`${API_URL}/new-image?query=${word}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setImages([{ ...data, title: word }, ...images]);
-        console.log(images);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      let res = await axios.get(`${API_URL}/new-image?query=${word}`);
+      setImages([{ ...res.data, title: word }, ...images]);
+    } catch (error) {
+      console.log(error);
+    }
+
     setWord("");
   };
   const handleDeleteImage = (id) => {
