@@ -3,7 +3,7 @@ import axios from "axios";
 import Header from "./components/Header";
 import Search from "./components/Search";
 import Welcome from "./components/Welcome";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ImageCard from "./components/ImageCard";
 import { Container, Col, Row } from "react-bootstrap";
 
@@ -13,6 +13,16 @@ const App = () => {
   const [word, setWord] = useState("");
   const [images, setImages] = useState([]);
   console.log(images);
+
+  const getSavedImages = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/images`);
+      setImages(res.data || []);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() =>  getSavedImages, []);
 
   const handleSubmitSearch = async (e) => {
     e.preventDefault();
