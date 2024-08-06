@@ -40,6 +40,17 @@ const App = () => {
     setImages(images.filter((image) => image.id !== id));
   };
 
+  const handleSaveImage = async (id) => {
+    const image = images.find((image) => image.id === id);
+    try {
+      const res = await axios.post(`${API_URL}/images`, image);
+      console.log(res.data);
+    } catch (error) {
+      console.log(error)
+    }
+   
+  }
+
   return (
     <div className="App">
       <Header title="Image Gallery" />
@@ -51,6 +62,7 @@ const App = () => {
               <Col className="pb-3" key={i}>
                 <ImageCard
                   deleteImage={handleDeleteImage}
+                  saveImage={handleSaveImage}
                   key={i}
                   image={image}
                 />
