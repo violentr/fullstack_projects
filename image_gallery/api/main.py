@@ -57,7 +57,11 @@ def image(image_id):
     """Delete image from db"""
     if request.method == "DELETE":
         result = images_collection.delete_one({"_id": image_id})
-        return {"deleted_id": image_id} if result.deleted_count != 0 else {}
+        if not result:
+            return {"error": "Image wasn't deleted, try again"}, 500
+        if result and not result.deleted_count:
+            return {"error": "Image not found"}, 404
+        return {"deleted_id": image_id}
 
 
 if __name__ == "__main__":
