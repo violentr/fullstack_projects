@@ -6,18 +6,21 @@ import Welcome from "./components/Welcome";
 import { useState, useEffect } from "react";
 import ImageCard from "./components/ImageCard";
 import { Container, Col, Row } from "react-bootstrap";
+import Spinner from './components/Spinner';
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5050";
 
 const App = () => {
   const [word, setWord] = useState("");
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true);
   console.log(images);
 
   const getSavedImages = async () => {
     try {
       const res = await axios.get(`${API_URL}/images`);
       setImages(res.data || []);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -63,7 +66,7 @@ const App = () => {
   return (
     <div className="App">
       <Header title="Image Gallery" />
-      <Search word={word} setWord={setWord} handleSubmit={handleSubmitSearch} />
+      {loading ? <Spinner /> : <><Search word={word} setWord={setWord} handleSubmit={handleSubmitSearch} />
       <Container className="mt-4">
         {images.length ? (
           <Row xs={1} md={2} lg={3}>
@@ -81,7 +84,7 @@ const App = () => {
         ) : (
           <Welcome />
         )}
-      </Container>
+      </Container></>}
     </div>
   );
 };
