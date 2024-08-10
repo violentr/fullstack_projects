@@ -11,9 +11,9 @@ const ImageCard = ({ image, deleteImage, saveImage }) => {
         <Button variant="primary" onClick={() => deleteImage(image.id)}>
           Delete
         </Button>
-        <Button variant="secondary" onClick={() => saveImage(image.id)}>
+        {!image.saved && (<Button variant="secondary" onClick={() => saveImage(image.id)}>
           Save
-        </Button>
+        </Button>)}
       </Card.Body>
     </Card>
   );

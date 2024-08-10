@@ -33,18 +33,20 @@ const App = () => {
     } catch (error) {
       console.log(error);
     }
-
     setWord("");
-  };
+  };  
   const handleDeleteImage = (id) => {
     setImages(images.filter((image) => image.id !== id));
   };
 
   const handleSaveImage = async (id) => {
     const image = images.find((image) => image.id === id);
+    image.saved = true;
     try {
       const res = await axios.post(`${API_URL}/images`, image);
-      console.log(res.data);
+      if (res.data?.inserted_id){
+        setImages(images.map((image) => image.id === id ? {...image, saved: true} : image)
+      )}
     } catch (error) {
       console.log(error)
     }
